@@ -1,1 +1,55 @@
-# codealpha_tasks
+import random 
+# Predefined words with hints
+words_with_hints = [
+    ("apple", "A fruit that keeps the doctor away"),
+    ("python", "A popular programming language and a type of snake"),
+    ("guitar", "A musical instrument with strings"),
+    ("india", "A country in South Asia"),
+    ("ocean", "A large body of salt water"),
+    ("bicycle", "A two-wheeled vehicle powered by pedaling"),
+    ("sunflower", "A tall plant with a large yellow flower"),
+    ("elephant", "The largest land animal"),
+    ("chocolate", "A sweet treat made from cocoa"),
+    ("mountain", "A large natural elevation of the earth's surface")
+]
+
+# Randomly select a word and its hint
+word, hint = random.choice(words_with_hints)
+guessed_letters = []
+incorrect_guesses = 0
+max_attempts = 6
+
+print("ðŸŽ® Welcome to Hangman!")
+print("Hint:", hint)
+
+# Create display with underscores
+display_word = ["_"] * len(word)
+
+while incorrect_guesses < max_attempts and "_" in display_word:
+    print("\nCurrent Word: ", " ".join(display_word))
+    guess = input("Guess a letter: ").lower()
+
+    if len(guess) != 1 or not guess.isalpha():
+        print("âš ï¸ Please enter a single alphabetic character.")
+        continue
+
+    if guess in guessed_letters:
+        print("ðŸ” You've already guessed that letter.")
+        continue
+
+    guessed_letters.append(guess)
+
+    if guess in word:
+        print("âœ… Correct!")
+        for i in range(len(word)):
+            if word[i] == guess:
+                display_word[i] = guess
+    else:
+        incorrect_guesses += 1
+        print(f"âŒ Incorrect! Attempts left: {max_attempts - incorrect_guesses}")
+
+# Game result
+if "_" not in display_word:
+    print("\nðŸŽ‰ Congratulations! You guessed the word:", word)
+else:
+    print("\nðŸ’€ Game Over! The word was:", word)
